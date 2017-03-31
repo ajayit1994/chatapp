@@ -1,0 +1,12 @@
+<link rel="stylesheet" href="css/bootstrap.min.css">
+<link rel="stylesheet" href="css/style.css">
+<div class="col-md-4 user-list">
+    <h2>List of Users</h2>
+    <ul class="list-group">
+        <li class="list-group-item" *ngFor="let user of userList" [ngClass]="{ 'active' : user.id == selectedUser}" (click)="seletedUser(user.id)" [ngStyle]="{
+                            'cursor': user.id === socketId ? 'not-allowed' :'pointer'
+                        }">
+            <span id='{{user.id}}'>{{user.id === socketId ? 'You': user.userName}}</span>
+        </li>
+    </ul>
+</div>

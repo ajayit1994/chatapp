@@ -1,0 +1,18 @@
+<link rel="stylesheet" href="css/bootstrap.min.css">
+<link rel="stylesheet" href="css/style.css">
+<div class="col-md-8 message-box">
+    <h2>Messages sent by users</h2>
+    <div class="message-container">
+        <ul class="list-group">
+            <li class="list-group-item" *ngFor="let message of messages">
+                {{ message.name }} says: {{ message.msg }}
+            </li>
+        </ul>
+        <div class="alert alert-warning" ng-show='<messages></messages>.length == 0'>
+            No messages for you.
+        </div>
+    </div>
+    <div class="message-sender">
+        <textarea class="form-control" [(ngModel)]='message' (keyup)="sendMsg($event)"></textarea>
+    </div>
+</div>
