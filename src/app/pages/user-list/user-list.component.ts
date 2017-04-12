@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import * as io from 'socket.io-client';
+import { SocketService} from '../../shared/services/socket.service';
 import { UserService } from '../../shared/services/user.service';
+import { MessageService } from '../../shared/services/messgae.service';
+import {Http, Response} from '@angular/http'
+
 
 @Component({
     selector: 'app-user-list',
@@ -14,33 +17,42 @@ export class UserListComponent implements OnInit {
     private socket;
     private socketId;
     private selectedUser;
-    constructor(private userService: UserService) {
-
+    constructor(private userService: UserService, private socketService : SocketService, private messageService: MessageService, private http : Http) {
+        
     }
 
     ngOnInit() {
         //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
         //Add 'implements OnInit' to the class.
-
         this.userName = this.userService.getUserName();
 
-        this.socket = io.connect('http://localhost:3020');
+        this.socket = this.socketService.getSocket();
 
-        this.socket.emit('userName', this.userName);
+        if(this.userName != undefined && this.userName != null && this.userName != '') {
+            this.socketService.emit('userName', this.userName);
+        } 
 
-        this.socket.on('userList', (userList, socketId) =>{
+        this.socketService.on('userList', (userList, socketId) =>{
             if(this.socketId == null) {
                 this.socketId = socketId;
             }
+            this.userService.setSocketId(this.socketId);
             this.userList = userList;
-        })
-
+            
+        });
     }
 
-    seletedUser(userId) {
+    // select the user that you want chat
+    seletedUser(userId, userName) {
         this.selectedUser = userId;
-        this.userService.setSelectedUser(userId);
-
+        this.userService.setSelectedUser(userId, userName);
+        var data = {
+            from : this.userName,
+            to : userName,
+            toUserId : userId,
+            fromUserId: this.socketId
+        }
+        this.socketService.emit('selectedUserMsg', data);
     }
 
 

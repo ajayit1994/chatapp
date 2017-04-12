@@ -1,0 +1,8 @@
+<form>
+    <div class="container">
+        <label><b>Username</b></label>
+        <input type="text" placeholder="Enter Username" [(ngModel)]="userName" name="userName" required>
+
+        <button type="submit" (click)="addUser(userName)" routerLink="userList">Login</button>
+    </div>
+</form>

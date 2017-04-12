@@ -1,0 +1,24 @@
+.message-sender {
+    padding: 20px;
+}
+
+.message-sender .form-control {
+    float: left;
+    margin-right: 20px;
+    width: 75%;
+}
+
+.message-sender input[type="submit"] {
+    padding: 8px 20px;
+    background-color: green;
+    border: none;
+    border-radius: 5px;
+    color: #fff;
+    font-weight: 600;
+    font-size: 16px;
+    letter-spacing: 1px;
+}
+
+.message-sender input[type="submit"]:hover {
+    background-color: black;
+}
